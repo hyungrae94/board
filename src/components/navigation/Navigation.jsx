@@ -3,7 +3,7 @@ import { useState } from 'react';
 import * as Styled from './Navigation.style';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navigation = () => {
+const Navigation = ({ setIsViewLogin }) => {
     const route = useNavigate();
     const [isLogin, setIsLogin] = useState(false);
     const [isMenuView, setIsMenuView] = useState(false);
@@ -32,7 +32,7 @@ const Navigation = () => {
                     )}
                 </Styled.AvatarContainer>
             ) : (
-                <Styled.LoginButton size="small" startIcon={<LockPersonIcon />}>
+                <Styled.LoginButton onClick={() => setIsViewLogin(true)} size="small" startIcon={<LockPersonIcon />}>
                     로그인 / 회원가입
                 </Styled.LoginButton>
             )}
