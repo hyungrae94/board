@@ -8,9 +8,17 @@ const style = css`
         list-style: none;
     }
 
+    body {
+        padding-top: 60px;
+        background-color: #f8f8f8;
+    }
+
     #root {
         max-width: 1440px;
         min-width: 1200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         margin: auto;
     }
 
