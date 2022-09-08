@@ -39,13 +39,13 @@ export const Avatar = styled.div`
     display: inline-block;
     width: 28px;
     height: 28px;
-    border: 1px solid;
-    border-color: ${({ isBorder }) => isBorder && 'blue'};
+    border: 2px solid;
+    border-color: ${({ isBorder }) => isBorder && '#03a9f4'};
     border-radius: 50%;
     background-color: #795548;
     color: white;
     text-align: center;
-    line-height: 28px;
+    line-height: 26px;
     font-size: 11px;
     cursor: pointer;
 `;
@@ -68,7 +68,7 @@ export const MenuList = styled.li`
     padding: 5px;
     margin: 10px 10px 0px 10px;
     color: #7e7e7e;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
 
     :hover {

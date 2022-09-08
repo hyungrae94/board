@@ -1,6 +1,6 @@
 import * as Styled from './App.style';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Board from './components/Board';
+import Board from './components/board/Board';
 import Navigation from './components/navigation/Navigation';
 import Login from './components/login/Login';
 import { useState } from 'react';

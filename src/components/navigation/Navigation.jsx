@@ -20,12 +20,13 @@ const Navigation = ({ setIsViewLogin }) => {
             {isLogin ? (
                 <Styled.AvatarContainer>
                     <Styled.Avatar isBorder={isMenuView} onClick={() => setIsMenuView(pre => !pre)}>
-                        <span>Rea</span>
+                        <span>형래</span>
                     </Styled.Avatar>
                     {isMenuView && (
                         <Styled.AvatarMenu>
                             <ul>
-                                <Styled.MenuList onClick={onClickMenu}>내 정보</Styled.MenuList>
+                                <Styled.MenuList onClick={onClickMenu}>정보 수정하기</Styled.MenuList>
+                                <Styled.MenuList onClick={onClickMenu}>내가 쓴글</Styled.MenuList>
                                 <Styled.MenuList onClick={onClickMenu}>로그아웃</Styled.MenuList>
                             </ul>
                         </Styled.AvatarMenu>

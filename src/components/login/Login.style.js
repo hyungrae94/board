@@ -63,6 +63,12 @@ export const SignButton = styled(Button)`
     width: 100%;
     height: 45px;
     margin-bottom: 20px;
+    background-color: #03a9f4;
+
+    :hover {
+        opacity: 0.8;
+        background-color: #03a9f4;
+    }
 `;
 
 export const SignContainer = styled.div`
