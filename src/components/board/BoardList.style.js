@@ -24,8 +24,10 @@ export const BoardItem = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 120px;
-    margin-top: 10px;
-    border: 1px solid gold;
+    padding-bottom: 20px;
+    margin-top: 40px;
+    border-bottom: 0.2px solid #7e7e7e;
+    overflow: hidden;
 
     cursor: pointer;
 `;
@@ -33,13 +35,46 @@ export const BoardItem = styled.div`
 export const TextSection = styled.div`
     width: 400px;
     height: 100%;
+`;
 
-    border: 1px solid blue;
+export const UserInfo = styled.div`
+    display: flex;
+    align-items: center;
+    h1 {
+        margin-right: 10px;
+        font-size: 15px;
+    }
+    span {
+        color: #7e7e7e;
+        font-size: 12px;
+    }
+`;
+
+export const UserInfoInner = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+`;
+
+export const UserAvatar = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #2196f3;
+    color: white;
 `;
 
 export const ImageSection = styled.div`
     width: 200px;
     height: 100%;
 
-    border: 1px solid red;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
 `;
