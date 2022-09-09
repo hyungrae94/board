@@ -1,6 +1,6 @@
 import * as Styled from './App.style';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Board from './components/board/Board';
+import { BoardList } from './components/board/index';
 import Navigation from './components/navigation/Navigation';
 import Login from './components/login/Login';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ const App = () => {
             <Navigation setIsViewLogin={setIsViewLogin} />
             <Styled.Main>
                 <Routes>
-                    <Route path="/" element={<Board />} />
+                    <Route path="/" element={<BoardList />} />
                 </Routes>
             </Styled.Main>
         </BrowserRouter>

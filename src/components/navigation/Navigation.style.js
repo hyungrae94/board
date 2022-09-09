@@ -3,6 +3,7 @@ import { Button } from '@mui/material';
 
 export const Navigation = styled.nav`
     position: fixed;
+    z-index: 99;
     top: 0px;
     left: 0px;
     display: flex;

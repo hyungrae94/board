@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Navigation = ({ setIsViewLogin }) => {
     const route = useNavigate();
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
     const [isMenuView, setIsMenuView] = useState(false);
 
     const onClickMenu = event => {
@@ -25,7 +25,7 @@ const Navigation = ({ setIsViewLogin }) => {
                     {isMenuView && (
                         <Styled.AvatarMenu>
                             <ul>
-                                <Styled.MenuList onClick={onClickMenu}>정보 수정하기</Styled.MenuList>
+                                <Styled.MenuList onClick={onClickMenu}>내 정보</Styled.MenuList>
                                 <Styled.MenuList onClick={onClickMenu}>내가 쓴글</Styled.MenuList>
                                 <Styled.MenuList onClick={onClickMenu}>로그아웃</Styled.MenuList>
                             </ul>
