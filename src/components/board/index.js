@@ -1,3 +1,5 @@
-import BoardList from './BoardList';
+import BoardList from './list/BoardList';
+import BoardWrite from './write/BoardWrite';
+import Board from './detail/Board';
 
-export { BoardList };
+export { BoardList, BoardWrite, Board };

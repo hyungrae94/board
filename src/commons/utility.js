@@ -1,3 +1,5 @@
+const AVATAR_COLOR = ['#795548', '#cddc39', '#8bc34a', '#3f51b5', '#ff9800'];
+
 export const replaceDate = writtenAt => {
     const today = new Date();
     const writtenDay = new Date(writtenAt);
@@ -13,4 +15,13 @@ export const replaceDate = writtenAt => {
     return `${String(writtenDay.getFullYear()).slice(2)}-${String(writtenDay.getMonth() + 1).padStart(2, '0')}-${String(
         writtenDay.getDate()
     ).padStart(2, '0')}`;
+};
+
+export const randomColor = () => {
+    const num = Math.floor(Math.random() * 5 + 1);
+    return AVATAR_COLOR[num + 1];
+};
+
+export const replaceName = name => {
+    return name[0].toUpperCase() + name[1].toUpperCase();
 };

@@ -1,14 +1,22 @@
 import LockPersonIcon from '@mui/icons-material/LockPerson';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import * as Styled from './Navigation.style';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
+import { replaceName } from '../../commons/utility';
 
 const Navigation = ({ setIsViewLogin }) => {
     const route = useNavigate();
-    const [isLogin, setIsLogin] = useState(true);
+
+    const { isLogin, userInfo, setIsLogin, setUserInfo } = useContext(UserContext);
     const [isMenuView, setIsMenuView] = useState(false);
 
     const onClickMenu = event => {
+        if (event.target.innerText === '로그아웃') {
+            setIsLogin(false);
+            setUserInfo({});
+            localStorage.clear();
+        }
         setIsMenuView(false);
         route('/');
     };
@@ -20,7 +28,7 @@ const Navigation = ({ setIsViewLogin }) => {
             {isLogin ? (
                 <Styled.AvatarContainer>
                     <Styled.Avatar isBorder={isMenuView} onClick={() => setIsMenuView(pre => !pre)}>
-                        <span>형래</span>
+                        <span>{replaceName(userInfo.name)}</span>
                     </Styled.Avatar>
                     {isMenuView && (
                         <Styled.AvatarMenu>

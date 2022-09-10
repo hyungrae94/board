@@ -37,7 +37,9 @@ export const AvatarContainer = styled.div`
 `;
 
 export const Avatar = styled.div`
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 28px;
     height: 28px;
     border: 2px solid;
@@ -45,9 +47,7 @@ export const Avatar = styled.div`
     border-radius: 50%;
     background-color: #795548;
     color: white;
-    text-align: center;
-    line-height: 26px;
-    font-size: 11px;
+    font-size: 10px;
     cursor: pointer;
 `;
 

@@ -1,6 +1,6 @@
 import * as Styled from './App.style';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { BoardList } from './components/board/index';
+import { Board, BoardList, BoardWrite } from './components/board/index';
 import Navigation from './components/navigation/Navigation';
 import Login from './components/login/Login';
 import { useState } from 'react';
@@ -17,6 +17,8 @@ const App = () => {
             <Styled.Main>
                 <Routes>
                     <Route path="/" element={<BoardList />} />
+                    <Route path="/:id" element={<Board />} />
+                    <Route path="/write" element={<BoardWrite />} />
                 </Routes>
             </Styled.Main>
         </BrowserRouter>
