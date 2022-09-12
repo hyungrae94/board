@@ -33,7 +33,7 @@ const BoardWrite = () => {
             writerId: userInfo.id,
         });
 
-        // if (result.data.message === 'Create') route(`/board/${result.data.id}`);
+        if (result.data.message === 'Create') route(`/${result.data.id}`);
     };
     const fileRef = useRef(null);
 

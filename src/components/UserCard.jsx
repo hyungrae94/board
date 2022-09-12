@@ -6,14 +6,18 @@ import { replaceName } from '../commons/utility';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 
-const UserCard = ({ user, isEdit = false }) => {
+const UserCard = ({ user, deleteBoard, page }) => {
     const route = useNavigate();
-    const { isLogin } = useContext(UserContext);
+    const { isLogin, userInfo } = useContext(UserContext);
+
+    const onClickWrite = () => {
+        isLogin ? route('/write') : alert('로그인을 해주세요.');
+    };
 
     return (
         <UserInfo>
             {isLogin ? (
-                <UserAvatar color="#795548">{replaceName(user.name)}</UserAvatar>
+                <UserAvatar color="#795548">{replaceName(userInfo.name || '')}</UserAvatar>
             ) : (
                 <UserAvatar color="#bbbabb">
                     <FiUser />
@@ -22,21 +26,23 @@ const UserCard = ({ user, isEdit = false }) => {
             <InfoContainer>
                 {isLogin ? (
                     <>
-                        <h1>{user.email}</h1>
-                        <span>{user.name}</span>
+                        <h1>{userInfo.email}</h1>
+                        <span>{userInfo.name}</span>
                     </>
                 ) : (
                     <h1>로그인을 해주세요.</h1>
                 )}
             </InfoContainer>
             <div style={{ display: 'flex' }}>
-                {isEdit ? (
+                {userInfo.id === user.id && page === 'detail' ? (
                     <>
                         <UpdateButton variant="outlined">수정</UpdateButton>
-                        <DeleteButton variant="outlined">삭제</DeleteButton>
+                        <DeleteButton variant="outlined" onClick={deleteBoard}>
+                            삭제
+                        </DeleteButton>{' '}
                     </>
                 ) : (
-                    <AddButton variant="outlined" onClick={() => route('/write')}>
+                    <AddButton variant="outlined" onClick={onClickWrite}>
                         글 쓰기
                     </AddButton>
                 )}
@@ -48,6 +54,7 @@ const UserCard = ({ user, isEdit = false }) => {
 export default UserCard;
 
 const UserInfo = styled.div`
+    /* position: fixed; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;

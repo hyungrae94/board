@@ -70,15 +70,18 @@ export const Title = styled.h1`
     width: 350px;
     margin-top: 10px;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-size: medium;
 `;
 
 export const Content = styled.p`
     display: block;
     width: 350px;
-    height: 50px;
+    height: 60px;
     padding-top: 10px;
     overflow: hidden;
+    white-space: pre-wrap;
     text-overflow: ellipsis;
 `;
 

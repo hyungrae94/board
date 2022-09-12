@@ -4,7 +4,7 @@ import { UserContext } from '../../../contexts/UserContext';
 import UserCard from '../../UserCard';
 import * as Styled from './BoardList.style';
 import axios from 'axios';
-import { replaceDate, replaceName } from '../../../commons/utility';
+import { replaceContent, replaceDate, replaceName } from '../../../commons/utility';
 
 const BoardList = () => {
     const route = useNavigate();
@@ -36,12 +36,12 @@ const BoardList = () => {
                             <Styled.UserInfo>
                                 <Styled.UserAvatar>{replaceName(el.writer)}</Styled.UserAvatar>
                                 <Styled.UserInfoInner>
-                                    <h1>woo@squares.ai</h1>
+                                    <h1>{`${el.writer}@squares.ai`}</h1>
                                     <span>{replaceDate(el.createDate)}</span>
                                 </Styled.UserInfoInner>
                             </Styled.UserInfo>
                             <Styled.Title>{el.title}</Styled.Title>
-                            <Styled.Content>{el.content}</Styled.Content>
+                            <Styled.Content>{replaceContent(el.content)}</Styled.Content>
                         </Styled.TextSection>
                         <Styled.ImageSection>{<img src="https://picsum.photos/200" />}</Styled.ImageSection>
                     </Styled.BoardItem>

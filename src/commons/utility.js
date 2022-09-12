@@ -23,5 +23,11 @@ export const randomColor = () => {
 };
 
 export const replaceName = name => {
+    if (name === '') return name;
     return name[0].toUpperCase() + name[1].toUpperCase();
+};
+
+export const replaceContent = content => {
+    if (content.length > 50) return content.slice(0, 50) + ' .....';
+    return content;
 };
