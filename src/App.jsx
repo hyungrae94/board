@@ -5,6 +5,7 @@ import Navigation from './components/navigation/Navigation';
 import Login from './components/login/Login';
 import { useState } from 'react';
 import SignUp from './components/login/SignUp';
+import FileTest from './components/FileTest';
 
 const App = () => {
     const [isViewLogin, setIsViewLogin] = useState(false);
@@ -19,6 +20,7 @@ const App = () => {
                     <Route path="/" element={<BoardList />} />
                     <Route path="/:id" element={<Board />} />
                     <Route path="/write" element={<BoardWrite />} />
+                    <Route path="/file" element={<FileTest />} />
                 </Routes>
             </Styled.Main>
         </BrowserRouter>

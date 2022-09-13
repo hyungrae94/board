@@ -17,7 +17,7 @@ const UserCard = ({ user, deleteBoard, page }) => {
     return (
         <UserInfo>
             {isLogin ? (
-                <UserAvatar color="#795548">{replaceName(userInfo.name || '')}</UserAvatar>
+                <UserAvatar color={userInfo.color}>{replaceName(userInfo.name || '')}</UserAvatar>
             ) : (
                 <UserAvatar color="#bbbabb">
                     <FiUser />
@@ -39,7 +39,7 @@ const UserCard = ({ user, deleteBoard, page }) => {
                         <UpdateButton variant="outlined">수정</UpdateButton>
                         <DeleteButton variant="outlined" onClick={deleteBoard}>
                             삭제
-                        </DeleteButton>{' '}
+                        </DeleteButton>
                     </>
                 ) : (
                     <AddButton variant="outlined" onClick={onClickWrite}>

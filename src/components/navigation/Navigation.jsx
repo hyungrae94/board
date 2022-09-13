@@ -27,7 +27,11 @@ const Navigation = ({ setIsViewLogin }) => {
             </Link>
             {isLogin ? (
                 <Styled.AvatarContainer>
-                    <Styled.Avatar isBorder={isMenuView} onClick={() => setIsMenuView(pre => !pre)}>
+                    <Styled.Avatar
+                        isBorder={isMenuView}
+                        color={userInfo.color}
+                        onClick={() => setIsMenuView(pre => !pre)}
+                    >
                         <span>{replaceName(userInfo.name)}</span>
                     </Styled.Avatar>
                     {isMenuView && (

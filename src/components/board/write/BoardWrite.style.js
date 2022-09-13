@@ -3,7 +3,6 @@ import { Button } from '@mui/material';
 
 export const Container = styled.div`
     width: 800px;
-    height: 100vh;
     padding: 30px;
     margin: auto;
     border-radius: 10px;
@@ -31,6 +30,10 @@ export const BackButton = styled(Button)`
 
 export const AddButton = styled(Button)`
     height: 36px;
+    background-color: #03a9f4;
+    :hover {
+        background-color: #a6d5fa;
+    }
 `;
 
 export const WriteTitle = styled.input`
@@ -46,7 +49,7 @@ export const WriteTitle = styled.input`
 `;
 
 export const WriteContent = styled.textarea`
-    min-height: 300px;
+    min-height: 450px;
     width: 100%;
     border: none;
     outline: none;

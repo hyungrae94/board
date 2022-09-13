@@ -19,7 +19,7 @@ export const replaceDate = writtenAt => {
 
 export const randomColor = () => {
     const num = Math.floor(Math.random() * 5 + 1);
-    return AVATAR_COLOR[num + 1];
+    return AVATAR_COLOR[num - 1];
 };
 
 export const replaceName = name => {

@@ -45,7 +45,7 @@ export const UserAvatar = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #2196f3;
+    background-color: ${({ color }) => color};
     color: white;
 `;
 

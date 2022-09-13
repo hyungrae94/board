@@ -8,36 +8,36 @@ import axios from 'axios';
 
 const BoardWrite = () => {
     const route = useNavigate();
+    const fileRef = useRef(null);
+    const { userInfo } = useContext(UserContext);
 
+    const [imageUrl, setImageUrl] = useState('');
+    const [file, setFile] = useState();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
-    const { userInfo } = useContext(UserContext);
-
     const onClickCreate = async () => {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        formData.append('writer', userInfo.name);
+        formData.append('writerId', userInfo.id);
+        formData.append('imageFile', file);
+
         const result = await axios.post(
             'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/board/add.php',
+            formData,
             {
-                title,
-                content,
-                writer: userInfo.name,
-                writerId: userInfo.id,
+                headers: {
+                    'Content-type': 'multipart/form-data',
+                },
             }
         );
 
         console.log(result);
-        console.log({
-            title,
-            content,
-            writer: userInfo.name,
-            writerId: userInfo.id,
-        });
 
         if (result.data.message === 'Create') route(`/${result.data.id}`);
     };
-    const fileRef = useRef(null);
-
-    const [imageUrl, setImageUrl] = useState('');
 
     const onClickUploadButton = () => {
         if (imageUrl !== '') {
@@ -48,11 +48,8 @@ const BoardWrite = () => {
     };
 
     const onChangeImage = event => {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(event.target.files[0]);
-        fileReader.onload = data => {
-            setImageUrl(String(data.target.result));
-        };
+        setImageUrl(URL.createObjectURL(event.target.files[0]));
+        setFile(event.target.files[0]);
     };
     return (
         <Styled.Container>

@@ -20,6 +20,7 @@ const BoardList = () => {
             },
         });
         setBoardList(result.data.data);
+        console.log(result.data.data);
     };
 
     useEffect(() => {
@@ -34,16 +35,22 @@ const BoardList = () => {
                     <Styled.BoardItem key={el.boardId} onClick={() => route(`/${el.boardId}`)}>
                         <Styled.TextSection>
                             <Styled.UserInfo>
-                                <Styled.UserAvatar>{replaceName(el.writer)}</Styled.UserAvatar>
+                                <Styled.UserAvatar color={el.userColor}>{replaceName(el.writer)}</Styled.UserAvatar>
                                 <Styled.UserInfoInner>
-                                    <h1>{`${el.writer}@squares.ai`}</h1>
+                                    <h1>{el.writerEmail}</h1>
                                     <span>{replaceDate(el.createDate)}</span>
                                 </Styled.UserInfoInner>
                             </Styled.UserInfo>
                             <Styled.Title>{el.title}</Styled.Title>
                             <Styled.Content>{replaceContent(el.content)}</Styled.Content>
                         </Styled.TextSection>
-                        <Styled.ImageSection>{<img src="https://picsum.photos/200" />}</Styled.ImageSection>
+                        <Styled.ImageSection>
+                            {Boolean(el.image) && (
+                                <img
+                                    src={`http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/upload/${el.image}`}
+                                />
+                            )}
+                        </Styled.ImageSection>
                     </Styled.BoardItem>
                 ))}
             </Styled.BoardContainer>

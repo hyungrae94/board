@@ -45,7 +45,7 @@ export const Avatar = styled.div`
     border: 2px solid;
     border-color: ${({ isBorder }) => isBorder && '#03a9f4'};
     border-radius: 50%;
-    background-color: #795548;
+    background-color: ${({ color }) => color};
     color: white;
     font-size: 10px;
     cursor: pointer;

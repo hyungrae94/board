@@ -41,19 +41,25 @@ const Board = () => {
             <div>
                 <Styled.BoardContainer>
                     <Styled.UserInfo>
-                        <Styled.UserAvatar>{replaceName(board.writer || '')}</Styled.UserAvatar>
+                        <Styled.UserAvatar color={board.writerColor}>
+                            {replaceName(board.writer || '')}
+                        </Styled.UserAvatar>
                         <Styled.UserInfoInner>
-                            <h1>{`${board.writer}@squares.ai`}</h1>
+                            <h1>{board.writerEmail}</h1>
                             <span>{replaceDate(board.createDate)}</span>
                         </Styled.UserInfoInner>
                     </Styled.UserInfo>
                     <Styled.Title>{board.title}</Styled.Title>
                     <Styled.Content>{board.content}</Styled.Content>
-                    <Styled.UploadImage>
-                        <img src="https://picsum.photos/200" />
-                    </Styled.UploadImage>
+                    {Boolean(board.image) && (
+                        <Styled.UploadImage>
+                            <img
+                                src={`http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/upload/${board.image}`}
+                            />
+                        </Styled.UploadImage>
+                    )}
                 </Styled.BoardContainer>
-                <Comment />
+                <Comment id={param.id} />
             </div>
         </Styled.Container>
     );
