@@ -1,9 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { randomColor } from '../../commons/utility';
+import { UserContext } from '../../contexts/UserContext';
+import CircularProgress from '@mui/material/CircularProgress';
+import styled from '@emotion/styled';
 
 const KakaoCallback = () => {
     const route = useNavigate();
+    const { setIsLogin, setUserInfo } = useContext(UserContext);
 
     const getToken = async code => {
         const result = await axios.post(
@@ -14,8 +19,7 @@ const KakaoCallback = () => {
                 },
             }
         );
-        getUserInfo(result.data.access_token);
-        console.log(result);
+        await getUserInfo(result.data.access_token);
         localStorage.setItem('token', result.data.access_token);
     };
 
@@ -27,20 +31,61 @@ const KakaoCallback = () => {
             },
         });
 
-        console.log(result);
+        if (!(await checkUser(result.data.sub))) {
+            addUser(result.data.sub, result.data.nickname);
+        }
+
+        await loginUser(result.data.sub);
     };
 
     const onClickLogout = async () => {
         const token = localStorage.getItem('token');
 
-        const result = await axios.get(`https://kapi.kakao.com/v1/user/logout`, {
+        await axios.get(`https://kapi.kakao.com/v1/user/logout`, {
             headers: {
                 authorization: `Bearer ${token}`,
                 'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
             },
         });
 
-        console.log(result);
+        localStorage.clear();
+        route('/');
+    };
+
+    const checkUser = async userId => {
+        const result = await axios.get(
+            `http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/snsUser/get.php?id=${userId}`
+        );
+
+        if (result.data.message === 'fail') {
+            return false;
+        }
+
+        return true;
+    };
+
+    const addUser = async (id, name) => {
+        await axios.post('http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/user/add.php', {
+            email: id,
+            password: '123',
+            name,
+            color: randomColor(),
+        });
+    };
+
+    const loginUser = async id => {
+        const result = await axios.post(
+            'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/user/get.php',
+            {
+                email: id,
+                password: '123',
+            }
+        );
+
+        setIsLogin(true);
+        setUserInfo(result.data);
+        localStorage.setItem('user', JSON.stringify(result.data));
+
         route('/');
     };
 
@@ -50,11 +95,21 @@ const KakaoCallback = () => {
     }, []);
 
     return (
-        <div>
-            <h1>kakao callback</h1>
-            <button onClick={onClickLogout}>로그아웃</button>
-        </div>
+        <Background>
+            <CircularProgress color="success" />
+        </Background>
     );
 };
 
 export default KakaoCallback;
+
+const Background = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+
+    span {
+    }
+`;

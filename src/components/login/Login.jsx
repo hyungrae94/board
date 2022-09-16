@@ -43,7 +43,6 @@ const Login = ({ setIsViewLogin, setIsViewSignUp }) => {
         setUserInfo(result.data);
         setIsViewLogin(false);
 
-        console.log(result.data);
         localStorage.setItem('user', JSON.stringify(result.data));
     };
 

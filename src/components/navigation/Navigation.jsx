@@ -4,6 +4,7 @@ import * as Styled from './Navigation.style';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { replaceName } from '../../commons/utility';
+import axios from 'axios';
 
 const Navigation = ({ setIsViewLogin }) => {
     const route = useNavigate();
@@ -11,10 +12,24 @@ const Navigation = ({ setIsViewLogin }) => {
     const { isLogin, userInfo, setIsLogin, setUserInfo } = useContext(UserContext);
     const [isMenuView, setIsMenuView] = useState(false);
 
-    const onClickMenu = event => {
+    const onClickMenu = async event => {
         if (event.target.innerText === '로그아웃') {
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                const result = await axios.get(`https://kapi.kakao.com/v1/user/logout`, {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                        'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+                    },
+                });
+
+                console.log(result);
+            }
+
             setIsLogin(false);
             setUserInfo({});
+
             localStorage.clear();
         }
         setIsMenuView(false);
