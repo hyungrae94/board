@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const Comment = ({ id }) => {
     const route = useNavigate();
-    const { userInfo } = useContext(UserContext);
+    const { userInfo, isLogin } = useContext(UserContext);
     const [comments, setComments] = useState([]);
     const [content, setContent] = useState();
 
@@ -45,22 +45,27 @@ const Comment = ({ id }) => {
     return (
         <Container>
             {comments.map(el => (
-                <CommentItem key={el.commentId || '101'} comment={el} />
+                <CommentItem key={el.commentId || '101'} comment={el} reload={getComment} />
             ))}
             <CommentInputContainer>
                 <CommentHeader>
                     <WriterAvatar color={userInfo.color}>{replaceName(userInfo.name || '')}</WriterAvatar>
                     <Writer>{userInfo.name}</Writer>
                 </CommentHeader>
-                <CommentInput
-                    value={content}
-                    onChange={e => setContent(e.target.value)}
-                    type="text"
-                    placeholder="댓글 남기기"
-                />
-                <AddButton variant="contained" onClick={onClickAddComment}>
-                    등록하기
-                </AddButton>
+                {isLogin && (
+                    <>
+                        <CommentInput
+                            value={content}
+                            onChange={e => setContent(e.target.value)}
+                            type="text"
+                            placeholder="댓글 남기기"
+                        />
+                        <AddButton variant="contained" onClick={onClickAddComment}>
+                            등록하기
+                        </AddButton>
+                    </>
+                )}
+
                 <ButtonContainer>
                     <BackButton onClick={() => route('/')} variant="outlined" startIcon={<KeyboardBackspaceIcon />}>
                         목록으로

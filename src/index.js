@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { UserContextProvider } from './contexts/UserContext';
@@ -7,12 +6,12 @@ import GlobalStyle from './styles/Global.style';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <UserContextProvider>
-            <GlobalStyle />
-            <App />
-        </UserContextProvider>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <UserContextProvider>
+        <GlobalStyle />
+        <App />
+    </UserContextProvider>
+    // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -6,6 +6,7 @@ import Login from './components/login/Login';
 import { useState } from 'react';
 import SignUp from './components/login/SignUp';
 import FileTest from './components/FileTest';
+import KakaoCallback from './components/login/KakaoCallback';
 
 const App = () => {
     const [isViewLogin, setIsViewLogin] = useState(false);
@@ -20,7 +21,9 @@ const App = () => {
                     <Route path="/" element={<BoardList />} />
                     <Route path="/:id" element={<Board />} />
                     <Route path="/write" element={<BoardWrite />} />
+                    <Route path="/update/:id" element={<BoardWrite isUpdate={true} />} />
                     <Route path="/file" element={<FileTest />} />
+                    <Route path="/kakao" element={<KakaoCallback />} />
                 </Routes>
             </Styled.Main>
         </BrowserRouter>

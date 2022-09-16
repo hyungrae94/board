@@ -1,11 +1,29 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
+import axios from 'axios';
 import { useContext } from 'react';
 import { replaceDate, replaceName } from '../../../commons/utility';
 import { UserContext } from '../../../contexts/UserContext';
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comment, reload }) => {
     const { userInfo } = useContext(UserContext);
+
+    const onClickDelete = async () => {
+        const result = await axios.delete(
+            'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/comment/delete.php',
+            {
+                data: {
+                    commentId: comment.commentId,
+                },
+            }
+        );
+
+        if (result.data.message === 'Delete') {
+            alert('삭제되었습니다.');
+            reload();
+        }
+    };
+
     return (
         <Container>
             <Header>
@@ -18,8 +36,9 @@ const CommentItem = ({ comment }) => {
             <CommentContent>{comment.content}</CommentContent>
             {userInfo.id === comment.writerId && (
                 <CommentFooter>
-                    <UpdateButton variant="outlined">수정</UpdateButton>
-                    <DeleteButton variant="outlined">삭제</DeleteButton>
+                    <DeleteButton variant="outlined" onClick={onClickDelete}>
+                        삭제
+                    </DeleteButton>
                 </CommentFooter>
             )}
         </Container>
@@ -75,17 +94,6 @@ const CommentFooter = styled.footer`
     display: flex;
     justify-content: flex-end;
     height: 30px;
-`;
-
-const UpdateButton = styled(Button)`
-    margin-right: 10px;
-    border-color: transparent;
-    color: #7e7e7e;
-    :hover {
-        border-color: transparent;
-        background-color: #a6d5fa;
-        color: white;
-    }
 `;
 
 const DeleteButton = styled(Button)`

@@ -5,11 +5,13 @@ import UserCard from '../../UserCard';
 import * as Styled from './BoardList.style';
 import axios from 'axios';
 import { replaceContent, replaceDate, replaceName } from '../../../commons/utility';
+import Pagination from '@mui/material/Pagination';
 
 const BoardList = () => {
     const route = useNavigate();
     const { userInfo } = useContext(UserContext);
     const [boardList, setBoardList] = useState([]);
+    const [lastPage, setLastPage] = useState();
 
     const getData = async page => {
         const result = await axios({
@@ -20,11 +22,18 @@ const BoardList = () => {
             },
         });
         setBoardList(result.data.data);
-        console.log(result.data.data);
+    };
+
+    const getCount = async () => {
+        const result = await axios.get(
+            'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/board/getCount.php'
+        );
+        setLastPage(Math.ceil(result.data.count / 5));
     };
 
     useEffect(() => {
         getData(1);
+        getCount();
     }, []);
 
     return (
@@ -45,14 +54,17 @@ const BoardList = () => {
                             <Styled.Content>{replaceContent(el.content)}</Styled.Content>
                         </Styled.TextSection>
                         <Styled.ImageSection>
-                            {Boolean(el.image) && (
+                            {el.image !== 'No file' && (
                                 <img
-                                    src={`http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/upload/${el.image}`}
+                                    src={`http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/readS3.php?file=${
+                                        el.image || ''
+                                    }`}
                                 />
                             )}
                         </Styled.ImageSection>
                     </Styled.BoardItem>
                 ))}
+                <Pagination count={lastPage} shape="rounded" onChange={(_, page) => getData(page)} />
             </Styled.BoardContainer>
         </Styled.Container>
     );

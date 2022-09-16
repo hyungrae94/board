@@ -6,7 +6,7 @@ import { replaceName } from '../commons/utility';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 
-const UserCard = ({ user, deleteBoard, page }) => {
+const UserCard = ({ user, deleteBoard, updateBoard, page }) => {
     const route = useNavigate();
     const { isLogin, userInfo } = useContext(UserContext);
 
@@ -36,7 +36,9 @@ const UserCard = ({ user, deleteBoard, page }) => {
             <div style={{ display: 'flex' }}>
                 {userInfo.id === user.id && page === 'detail' ? (
                     <>
-                        <UpdateButton variant="outlined">수정</UpdateButton>
+                        <UpdateButton variant="outlined" onClick={updateBoard}>
+                            수정
+                        </UpdateButton>
                         <DeleteButton variant="outlined" onClick={deleteBoard}>
                             삭제
                         </DeleteButton>

@@ -28,8 +28,11 @@ const Board = () => {
             }
         );
 
-        console.log(result.data);
         if (result.data.message === 'Delete') route('/');
+    };
+
+    const onClickUpdate = () => {
+        route(`/update/${param.id}`);
     };
 
     useEffect(() => {
@@ -37,7 +40,12 @@ const Board = () => {
     }, []);
     return (
         <Styled.Container>
-            <UserCard user={{ id: board.writerId }} deleteBoard={onClickDelete} page="detail" />
+            <UserCard
+                user={{ id: board.writerId }}
+                deleteBoard={onClickDelete}
+                updateBoard={onClickUpdate}
+                page="detail"
+            />
             <div>
                 <Styled.BoardContainer>
                     <Styled.UserInfo>
@@ -51,10 +59,12 @@ const Board = () => {
                     </Styled.UserInfo>
                     <Styled.Title>{board.title}</Styled.Title>
                     <Styled.Content>{board.content}</Styled.Content>
-                    {Boolean(board.image) && (
+                    {board.image !== 'No file' && (
                         <Styled.UploadImage>
                             <img
-                                src={`http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/upload/${board.image}`}
+                                src={`http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/readS3.php?file=${
+                                    board.image || ''
+                                }`}
                             />
                         </Styled.UploadImage>
                     )}

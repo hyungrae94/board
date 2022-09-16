@@ -1,9 +1,13 @@
 import * as Styled from './Login.style';
 import { FcGoogle } from 'react-icons/fc';
-import { RiKakaoTalkFill, RiFacebookFill, RiCloseLine } from 'react-icons/ri';
+import { RiKakaoTalkFill, RiCloseLine } from 'react-icons/ri';
+import { SiNaver } from 'react-icons/si';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import axios from 'axios';
+
+const KAKAO_AUTH_URL =
+    'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=eaffb2e6e2f844601a9e1e35e7231391&redirect_uri=http://localhost:3000/kakao';
 
 const Login = ({ setIsViewLogin, setIsViewSignUp }) => {
     const { setIsLogin, setUserInfo } = useContext(UserContext);
@@ -41,6 +45,10 @@ const Login = ({ setIsViewLogin, setIsViewSignUp }) => {
 
         console.log(result.data);
         localStorage.setItem('user', JSON.stringify(result.data));
+    };
+
+    const onClickKakaoLogin = () => {
+        window.location.href = KAKAO_AUTH_URL;
     };
 
     return (
@@ -81,11 +89,11 @@ const Login = ({ setIsViewLogin, setIsViewSignUp }) => {
                         회원가입
                     </Styled.SignButton>
                     <Styled.SignContainer>
-                        <Styled.SnsIcon color="#fee601">
+                        <Styled.SnsIcon color="#fee601" onClick={onClickKakaoLogin}>
                             <RiKakaoTalkFill />
                         </Styled.SnsIcon>
-                        <Styled.SnsIcon color="#1676f2" fontColor="white">
-                            <RiFacebookFill />
+                        <Styled.SnsIcon color="#18ce5f" fontColor="white">
+                            <SiNaver />
                         </Styled.SnsIcon>
                         <Styled.SnsIcon color="white">
                             <FcGoogle />
