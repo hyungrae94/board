@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { VscCommentDiscussion } from 'react-icons/vsc';
 
 const Comment = ({ id }) => {
     const route = useNavigate();
@@ -44,16 +45,21 @@ const Comment = ({ id }) => {
 
     return (
         <Container>
+            {comments.length === 0 && (
+                <CommentPlaceHolder>
+                    <VscCommentDiscussion />첫 댓글을 남겨주세요.
+                </CommentPlaceHolder>
+            )}
             {comments.map(el => (
                 <CommentItem key={el.commentId || '101'} comment={el} reload={getComment} />
             ))}
             <CommentInputContainer>
-                <CommentHeader>
-                    <WriterAvatar color={userInfo.color}>{replaceName(userInfo.name || '')}</WriterAvatar>
-                    <Writer>{userInfo.name}</Writer>
-                </CommentHeader>
                 {isLogin && (
                     <>
+                        <CommentHeader>
+                            <WriterAvatar color={userInfo.color}>{replaceName(userInfo.name || '')}</WriterAvatar>
+                            <Writer>{userInfo.name}</Writer>
+                        </CommentHeader>
                         <CommentInput
                             value={content}
                             onChange={e => setContent(e.target.value)}
@@ -115,6 +121,20 @@ const WriterAvatar = styled.div`
 const Writer = styled.h1`
     margin-left: 10px;
     font-size: 16px;
+`;
+
+const CommentPlaceHolder = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+
+    svg {
+        margin-bottom: 10px;
+        font-size: 40px;
+    }
 `;
 
 const CommentInput = styled.textarea`
