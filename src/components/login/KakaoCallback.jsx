@@ -5,14 +5,14 @@ import { randomColor } from '../../commons/utility';
 import { UserContext } from '../../contexts/UserContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import styled from '@emotion/styled';
+import { signInApi, signUpApi, snsLoginApi } from '../../api/userApi';
 
 const KakaoCallback = () => {
     const route = useNavigate();
     const { setIsLogin, setUserInfo } = useContext(UserContext);
-
     const getToken = async code => {
         const result = await axios.post(
-            `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=eaffb2e6e2f844601a9e1e35e7231391&redirect_uri=http://localhost:3000/kakao&code=${code}`,
+            `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=http://localhost:3000/kakao&code=${code}`,
             {
                 headers: {
                     'content-type': 'application/x-www-form-urlencoded',
@@ -38,24 +38,8 @@ const KakaoCallback = () => {
         await loginUser(result.data.sub);
     };
 
-    const onClickLogout = async () => {
-        const token = localStorage.getItem('token');
-
-        await axios.get(`https://kapi.kakao.com/v1/user/logout`, {
-            headers: {
-                authorization: `Bearer ${token}`,
-                'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-            },
-        });
-
-        localStorage.clear();
-        route('/');
-    };
-
     const checkUser = async userId => {
-        const result = await axios.get(
-            `http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/snsUser/get.php?id=${userId}`
-        );
+        const result = await snsLoginApi(userId);
 
         if (result.data.message === 'fail') {
             return false;
@@ -65,22 +49,11 @@ const KakaoCallback = () => {
     };
 
     const addUser = async (id, name) => {
-        await axios.post('http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/user/add.php', {
-            email: id,
-            password: '123',
-            name,
-            color: randomColor(),
-        });
+        signUpApi({ email: id, password: '123', name, color: randomColor() });
     };
 
     const loginUser = async id => {
-        const result = await axios.post(
-            'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/user/get.php',
-            {
-                email: id,
-                password: '123',
-            }
-        );
+        const result = await signInApi({ email: id, password: '123' });
 
         setIsLogin(true);
         setUserInfo(result.data);
@@ -109,7 +82,4 @@ const Background = styled.div`
     align-items: center;
     width: 100%;
     height: 100vh;
-
-    span {
-    }
 `;

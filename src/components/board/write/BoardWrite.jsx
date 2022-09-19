@@ -5,6 +5,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../../../contexts/UserContext';
 import axios from 'axios';
+import { getBoardApi } from '../../../api/boardApi';
 
 const BoardWrite = ({ isUpdate = false }) => {
     const route = useNavigate();
@@ -18,16 +19,12 @@ const BoardWrite = ({ isUpdate = false }) => {
     const [content, setContent] = useState('');
 
     const getData = async id => {
-        const result = await axios.get(
-            `http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/board/get.php?id=${id}`
-        );
+        const result = await getBoardApi(id);
 
         setTitle(result.data.title);
         setContent(result.data.content);
-        result.data.image !== 'No file' &&
-            setImageUrl(
-                `http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/readS3.php?file=${result.data.image}`
-            );
+
+        result.data.image !== 'No file' && setImageUrl(result.data.image);
     };
 
     const onClickUpdate = async () => {

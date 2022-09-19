@@ -1,8 +1,8 @@
 import * as Styled from './Login.style';
 import { RiCloseLine } from 'react-icons/ri';
-import axios from 'axios';
 import { useState } from 'react';
 import { randomColor } from '../../commons/utility';
+import { signUpApi } from '../../api/userApi';
 
 const SignUp = ({ setIsViewSignUp }) => {
     const [inputValue, setInputValue] = useState({
@@ -24,10 +24,7 @@ const SignUp = ({ setIsViewSignUp }) => {
     };
 
     const onClickSignUp = async () => {
-        const result = await axios.post(
-            'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/user/add.php',
-            inputValue
-        );
+        const result = await signUpApi(inputValue);
 
         if (result.data.message === 'Create') setIsViewSignUp(false);
     };

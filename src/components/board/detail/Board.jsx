@@ -3,8 +3,8 @@ import UserCard from '../../UserCard';
 import * as Styled from './Board.style';
 import Comment from '../../comment/Comment';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { replaceDate, replaceName } from '../../../commons/utility';
+import { deleteBoardApi, getBoardApi } from '../../../api/boardApi';
 
 const Board = () => {
     const param = useParams();
@@ -12,21 +12,12 @@ const Board = () => {
     const [board, setBoard] = useState({});
 
     const getData = async id => {
-        const result = await axios.get(
-            `http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/board/get.php?id=${id}`
-        );
+        const result = await getBoardApi(id);
         setBoard(result.data);
     };
 
     const onClickDelete = async () => {
-        const result = await axios.delete(
-            'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/board/delete.php',
-            {
-                data: {
-                    boardId: board.boardId,
-                },
-            }
-        );
+        const result = await deleteBoardApi(board.boardId);
 
         if (result.data.message === 'Delete') route('/');
     };
@@ -61,11 +52,7 @@ const Board = () => {
                     <Styled.Content>{board.content}</Styled.Content>
                     {board.image !== 'No file' && (
                         <Styled.UploadImage>
-                            <img
-                                src={`http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/readS3.php?file=${
-                                    board.image || ''
-                                }`}
-                            />
+                            <img src={process.env.REACT_APP_S3_URL + (board.image || '')} />
                         </Styled.UploadImage>
                     )}
                 </Styled.BoardContainer>

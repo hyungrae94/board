@@ -4,10 +4,7 @@ import { RiKakaoTalkFill, RiCloseLine } from 'react-icons/ri';
 import { SiNaver } from 'react-icons/si';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-import axios from 'axios';
-
-const KAKAO_AUTH_URL =
-    'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=eaffb2e6e2f844601a9e1e35e7231391&redirect_uri=http://localhost:3000/kakao';
+import { signInApi } from '../../api/userApi';
 
 const Login = ({ setIsViewLogin, setIsViewSignUp }) => {
     const { setIsLogin, setUserInfo } = useContext(UserContext);
@@ -29,10 +26,7 @@ const Login = ({ setIsViewLogin, setIsViewSignUp }) => {
     };
 
     const onClickSignIn = async () => {
-        const result = await axios.post(
-            'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/user/get.php',
-            user
-        );
+        const result = await signInApi(user);
 
         if (result.data.message === 'fail') {
             alert('아이디, 비밀번호를 확인해주세요.');
@@ -47,7 +41,7 @@ const Login = ({ setIsViewLogin, setIsViewSignUp }) => {
     };
 
     const onClickKakaoLogin = () => {
-        window.location.href = KAKAO_AUTH_URL;
+        window.location.href = process.env.REACT_APP_KAKAO_AUTH_URL;
     };
 
     return (

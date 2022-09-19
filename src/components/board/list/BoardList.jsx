@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../contexts/UserContext';
 import UserCard from '../../UserCard';
 import * as Styled from './BoardList.style';
-import axios from 'axios';
 import { replaceContent, replaceDate, replaceName } from '../../../commons/utility';
 import Pagination from '@mui/material/Pagination';
+import { getBoardCount, getBoardListApi } from '../../../api/boardApi';
 
 const BoardList = () => {
     const route = useNavigate();
@@ -14,20 +14,12 @@ const BoardList = () => {
     const [lastPage, setLastPage] = useState();
 
     const getData = async page => {
-        const result = await axios({
-            method: 'get',
-            url: `http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/board/getList.php?page=${page}`,
-            headers: {
-                'content-type': 'application/json',
-            },
-        });
+        const result = await getBoardListApi(page);
         setBoardList(result.data.data);
     };
 
     const getCount = async () => {
-        const result = await axios.get(
-            'http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/board/getCount.php'
-        );
+        const result = await getBoardCount();
         setLastPage(Math.ceil(result.data.count / 5));
     };
 
@@ -54,13 +46,7 @@ const BoardList = () => {
                             <Styled.Content>{replaceContent(el.content)}</Styled.Content>
                         </Styled.TextSection>
                         <Styled.ImageSection>
-                            {el.image !== 'No file' && (
-                                <img
-                                    src={`http://ec2-15-165-45-169.ap-northeast-2.compute.amazonaws.com/api/readS3.php?file=${
-                                        el.image || ''
-                                    }`}
-                                />
-                            )}
+                            {el.image !== 'No file' && <img src={process.env.REACT_APP_S3_URL + (el.image || '')} />}
                         </Styled.ImageSection>
                     </Styled.BoardItem>
                 ))}
